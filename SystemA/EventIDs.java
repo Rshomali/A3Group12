@@ -6,6 +6,8 @@ public class EventIDs
 	final public static int FIRE_ID = 3;
 	final public static int SPRINKLER_ID = 4;
 
+	final public static int ALARM_ID = 11;
+
 	final public static int SECURITY_MONITOR_ID= 5;
 	final public static int MAINTENANCE_MONITOR_ID= 6;
 	
