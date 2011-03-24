@@ -153,96 +153,47 @@ class SecurityMonitor extends Thread
 					
 						if(!armed)
 							break;
-						//We forward the event to the console
-						evt = new Event( EventIDs.SECURITY_MONITOR_ID, Events.DOOR_BROKEN );
-
-						// Here we send the event to the event manager.
-
-						try
-						{
-							em.SendEvent( evt );
-							//mw.WriteMessage( "Sent Humidity Event" );
-
-						} // try
-
-						catch (Exception e)
-						{
-							System.out.println( "Error Posting Door Break:: " + e );
-
-						} // catch
+						else
+							mw.WriteMessage("DOOR BROKEN!");
 					break;
 					
 					case EventIDs.WINDOW_ID : // window broken
 						
 						if(!armed)
 							break;
-						//We forward the event to the console
-						evt = new Event( EventIDs.SECURITY_MONITOR_ID, Events.WINDOW_BROKEN );
-
-						// Here we send the event to the event manager.
-
-						try
-						{
-							em.SendEvent( evt );
-
-						} // try
-
-						catch (Exception e)
-						{
-							System.out.println( "Error Posting Window Break:: " + e );
-
-						} // catch
+						else
+							mw.WriteMessage("WINDOW BROKEN!");
 					break;
 
 					case EventIDs.MOTION_ID : // motion detected
 					
 						if(!armed)
 							break;
-						//We forward the event to the console
-						evt = new Event( EventIDs.SECURITY_MONITOR_ID, Events.MOTION_DETECTED );
-
-						// Here we send the event to the event manager.
-
-						try
-						{
-							em.SendEvent( evt );
-
-						} // try
-
-						catch (Exception e)
-						{
-							System.out.println( "Error Posting Motion Detection:: " + e );
-						} // catch
+						else
+							mw.WriteMessage("MOTION DETECTED!");
 					break;
 					
 					case EventIDs.FIRE_ID : // fire detected
 					
 						if(!armed)
 							break;
-						//We forward the event to the console
-						evt = new Event( EventIDs.SECURITY_MONITOR_ID, Events.FIRE_ALARM );
-
-						// Here we send the event to the event manager.
-
-						try
-						{
-							em.SendEvent( evt );
-
-						} // try
-
-						catch (Exception e)
-						{
-							System.out.println( "Error Posting Fire Alarm:: " + e );
-						} // catch
+						else
+							mw.WriteMessage("FIRE ALARM!");
 					break;
 				
 					case EventIDs.CONSOLE_ID :
 					
 						if(Evt0.GetMessage().equals(Events.ARM_SYSTEM))
+						{
+							mw.WriteMessage("SYSTEM IS ARMED");
 							armed = true;
+						}
 						else if(Evt0.GetMessage().equals(Events.DISARM_SYSTEM))
+						{
+							mw.WriteMessage("SYSTEM IS DISARMED");
 							armed = false;
-						else if(Evt0.GetMessage().equals(Events.SPRINKLER_OFF))
+						}
+						/*else if(Evt0.GetMessage().equals(Events.SPRINKLER_OFF))
 						{
 
 							// Here we send the event to the event manager.
@@ -255,7 +206,7 @@ class SecurityMonitor extends Thread
 							{
 								System.out.println( "Error Posting Sprinkler Turn Off:: " + e );
 							} // catch
-						}
+						}*/
 					break;
 					}
 
