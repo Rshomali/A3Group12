@@ -153,7 +153,7 @@ class FireSensor{
 						if (Evt.GetMessage().equalsIgnoreCase("SFA")) // humidifier on
 						{
 							FireAlarmState = 1;
-							PostDoorBroken( em, "FA" );
+							PostFireAlarm( em, "FA" );
 						} // if
 
 						
