@@ -6,6 +6,7 @@ import java.util.*;
 class WindowSensor{
 		
 	static int sensorID = 7;
+	static int CONSOLE_ID = 17;
 	
 	public static void main(String args[])
 	{
@@ -118,7 +119,7 @@ class WindowSensor{
 			{
 				// Post the current DOOR BROKEN STATUS
 
-				PostWindowBroken( em, WindowBrokenState );
+				//PostWindowBroken( em, WindowBrokenState );
 
 				mw.WriteMessage("Current Door Broken Status:: " + WindowBrokenState + "%");
 
@@ -150,12 +151,12 @@ class WindowSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == 17 )
+					if ( Evt.GetEventId() == CONSOLE_ID )
 					{
 						if (Evt.GetMessage().equalsIgnoreCase("SWB")) // humidifier on
 						{
 							WindowBrokenState = 1;
-
+							PostWindowBroken( em, "WB");
 						} // if
 
 						
@@ -193,7 +194,7 @@ class WindowSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, 1); 
+					PostAliveSignal(em, "A"); 
 					previousTime = nowTime;
 				}
 										
@@ -201,11 +202,11 @@ class WindowSensor{
 		}
 	}			
 			
-	static private void PostWindowBroken(EventManagerInterface ei, int windowBroken )
+	static private void PostWindowBroken(EventManagerInterface ei, String event )
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(windowBroken) );
+		Event evt = new Event( sensorID, event );
 
 		// Here we send the event to the event manager.
 
@@ -218,7 +219,7 @@ class WindowSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Motion Detected State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 
@@ -226,11 +227,11 @@ class WindowSensor{
 	
 	
 	
-	static private void PostAliveSignal(EventManagerInterface ei, int alive )
+	static private void PostAliveSignal(EventManagerInterface ei, String event )
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(alive) );
+		Event evt = new Event( sensorID, event );
 
 		// Here we send the event to the event manager.
 
@@ -243,7 +244,7 @@ class WindowSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Motion Detected State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 

@@ -6,6 +6,7 @@ import java.util.*;
 class FireSensor{
 	
 	static int sensorID = 9;
+	static int CONSOLE_ID = 17;
 	
 	public static void main(String args[])
 	{
@@ -81,7 +82,7 @@ class FireSensor{
 			float WinPosY = 0.60f;	//This is the Y position of the message window in terms 
 								 	//of a percentage of the screen height 
 			
-			MessageWindow mw = new MessageWindow("Door Sensor", WinPosX, WinPosY);
+			MessageWindow mw = new MessageWindow("Fire Sensor", WinPosX, WinPosY);
 
 			mw.WriteMessage("Registered with the event manager." );
 
@@ -115,9 +116,9 @@ class FireSensor{
 			{
 				// Post the current DOOR BROKEN STATUS
 
-				PostFireAlarm( em, FireAlarmState );
+				//PostFireAlarm( em, FireAlarmState );
 
-				mw.WriteMessage("Current Door Broken Status:: " + FireAlarmState + "%");
+				mw.WriteMessage("Current Fire Alarm Status:: " + FireAlarmState + "%");
 
 				// Get the message queue
 
@@ -147,12 +148,12 @@ class FireSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == 17 )
+					if ( Evt.GetEventId() == CONSOLE_ID )
 					{
 						if (Evt.GetMessage().equalsIgnoreCase("SFA")) // humidifier on
 						{
 							FireAlarmState = 1;
-
+							PostDoorBroken( em, "FA" );
 						} // if
 
 						
@@ -188,18 +189,18 @@ class FireSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, 1); 
+					PostAliveSignal(em, "A"); 
 					previousTime = nowTime;
 				}			
 			}
 		}
 	}			
 			
-	static private void PostFireAlarm(EventManagerInterface ei, int fireAlarm )
+	static private void PostFireAlarm(EventManagerInterface ei, String event )
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(fireAlarm) );
+		Event evt = new Event( sensorID, event );
 
 		// Here we send the event to the event manager.
 
@@ -212,16 +213,16 @@ class FireSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Fire Alarm State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 
 	} // PostHumidity
-	static private void PostAliveSignal(EventManagerInterface ei, int alive )
+	static private void PostAliveSignal(EventManagerInterface ei, String event)
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(alive) );
+		Event evt = new Event( sensorID, event);
 
 		// Here we send the event to the event manager.
 
@@ -234,7 +235,7 @@ class FireSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Motion Detected State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 

@@ -5,7 +5,9 @@ import java.util.*;
 
 class DoorSensor{
 		
+	static int CONSOLE_ID = 17;
 	static int sensorID = 6;
+	
 	public static void main(String args[])
 	{
 		String EvtMgrIP;					// Event Manager IP address
@@ -132,7 +134,7 @@ class DoorSensor{
 			{
 				// Post the current DOOR BROKEN STATUS
 
-				PostDoorBroken( em, DoorBrokenState );
+				//PostDoorBroken( em, DoorBrokenState );
 
 				mw.WriteMessage("Current Door Broken Status:: " + DoorBrokenState + "%");
 
@@ -164,12 +166,12 @@ class DoorSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == 17 )
+					if ( Evt.GetEventId() == CONSOLE_ID )
 					{
 						if (Evt.GetMessage().equalsIgnoreCase("SDB")) // humidifier on
 						{
 							DoorBrokenState = 1;
-
+							PostDoorBroken( em, "DB");
 						} // if
 
 						/*
@@ -221,18 +223,18 @@ class DoorSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, 1); 
+					PostAliveSignal(em, "A"); 
 					previousTime = nowTime;
 				}
 			}
 		}
 	}			
 			
-	static private void PostDoorBroken(EventManagerInterface ei, int doorBroken )
+	static private void PostDoorBroken(EventManagerInterface ei, String event )
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(doorBroken) );
+		Event evt = new Event( sensorID, event );
 
 		// Here we send the event to the event manager.
 
@@ -245,17 +247,17 @@ class DoorSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Door Broken State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 
 	} // PostHumidity
 			
-	static private void PostAliveSignal(EventManagerInterface ei, int alive )
+	static private void PostAliveSignal(EventManagerInterface ei, String event)
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, String.valueOf(alive) );
+		Event evt = new Event( sensorID, event );
 
 		// Here we send the event to the event manager.
 
@@ -268,7 +270,7 @@ class DoorSensor{
 
 		catch (Exception e)
 		{
-			System.out.println( "Error Posting Motion Detected State:: " + e );
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
 
 		} // catch
 

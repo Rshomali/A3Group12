@@ -10,6 +10,6 @@ public class EventIDs
 	final public static int MAINTENANCE_MONITOR_ID= 6;
 	
 	final public static int SECURITY_CONTROLLER_ID=7;
-	final public static in FIREALARM_CONTROLLER_ID=8;
+	final public static int FIREALARM_CONTROLLER_ID=8;
 	final public static int SPRINKLER_CONTROLLER_ID= 9;
 }
