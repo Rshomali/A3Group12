@@ -239,7 +239,8 @@ class FireSensor{
 	} // PostHumidity
 	
 	
-	static private void PostEvent(EventManagerInterface ei, String eventID, String event,)
+	/*
+	static private void PostEvent(EventManagerInterface ei, String eventID, String event)
 	{
 		// Here we create the event.
 
@@ -262,6 +263,7 @@ class FireSensor{
 
 	} // PostEvent
 			
+			*/
 			
 }
 
