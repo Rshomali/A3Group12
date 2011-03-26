@@ -272,6 +272,14 @@ class HumiditySensor
 
 				} // catch
 
+				//calculate 5 sec
+				
+				nowTime = new Date();
+				long diff = nowTime.getSeconds()-previousTime.getSeconds();
+				if(diff>=5){
+					PostAliveSignal(em, Events.ALIVE); 
+					previousTime = nowTime;
+				}
 			} // while
 
 		} else {

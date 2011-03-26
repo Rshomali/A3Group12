@@ -5,8 +5,6 @@ import java.util.*;
 
 class MotionSensor{
 		
-	static int sensorID = 8;
-	static int CONSOLE_ID = 17;
 	
 	public static void main(String args[])
 	{
@@ -148,12 +146,12 @@ class MotionSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == CONSOLE_ID )
+					if ( Evt.GetEventId() == EventIDs.CONSOLE_ID )
 					{
-						if (Evt.GetMessage().equalsIgnoreCase("SMD")) // humidifier on
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_MOTION_DETECTED)) // humidifier on
 						{
 							MotionDetectedState = 1;//It might be unnecessary, 
-							PostMotionDetected( em , "MD");
+							PostMotionDetected( em , Events.MOTION_DETECTED);
 						} // if
 
 						
@@ -189,7 +187,7 @@ class MotionSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, "A"); 
+					PostAliveSignal(em, Events.ALIVE); 
 					previousTime = nowTime;
 				}
 			}
@@ -200,7 +198,7 @@ class MotionSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.MOTION_ID, event );
 
 		// Here we send the event to the event manager.
 
@@ -222,7 +220,7 @@ class MotionSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.MOTION_ID, event );
 
 		// Here we send the event to the event manager.
 
