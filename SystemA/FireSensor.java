@@ -237,6 +237,30 @@ class FireSensor{
 		} // catch
 
 	} // PostHumidity
+	
+	
+	static private void PostEvent(EventManagerInterface ei, String eventID, String event,)
+	{
+		// Here we create the event.
+
+		Event evt = new Event( eventID, event );
+
+		// Here we send the event to the event manager.
+
+		try
+		{
+			ei.SendEvent( evt );
+			//mw.WriteMessage( "Sent Humidity Event" );
+
+		} // try
+
+		catch (Exception e)
+		{
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
+
+		} // catch
+
+	} // PostEvent
 			
 			
 }
