@@ -5,8 +5,8 @@ import java.util.*;
 
 class DoorSensor{
 		
-	static int CONSOLE_ID = 17;
 	static int sensorID = 6;
+	static int CONSOLE_ID = 17;
 	
 	public static void main(String args[])
 	{
@@ -18,9 +18,6 @@ class DoorSensor{
 		
 		int DoorBrokenState = 0;			// DoorBroken State: 0 == no broken, 1 == broken.
 		
-		//boolean DoorBrokenState = false;	// Humidifier state: false == off, true == on
-		//boolean DehumidifierState = false;	// Dehumidifier state: false == off, true == on
-
 		int	Delay = 2500;					// The loop delay (2.5 seconds)
 		boolean Done = false;				// Loop termination flag
 

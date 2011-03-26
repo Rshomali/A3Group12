@@ -23,6 +23,8 @@
 *
 ******************************************************************************************************************/
 import EventPackage.*;
+import InstrumentationPackage.MessageWindow;
+
 import java.util.*;
 
 class SecurityMonitor extends Thread
@@ -36,46 +38,34 @@ class SecurityMonitor extends Thread
 	public SecurityMonitor()
 	{
 		// event manager is on the local system
-
 		try
 		{
 			// Here we create an event manager interface object. This assumes
 			// that the event manager is on the local machine
-
 			em = new EventManagerInterface();
-
 		}
-
 		catch (Exception e)
 		{
 			System.out.println("SecurityMonitor::Error instantiating event manager interface: " + e);
 			Registered = false;
-
 		} // catch
-
 	} //Constructor
 
 	public SecurityMonitor( String EvmIpAddress )
 	{
 		// event manager is not on the local system
-
 		EvtMgrIP = EvmIpAddress;
-
 		try
 		{
 			// Here we create an event manager interface object. This assumes
 			// that the event manager is NOT on the local machine
-
 			em = new EventManagerInterface( EvtMgrIP );
 		}
-
 		catch (Exception e)
 		{
 			System.out.println("SecurityMonitor::Error instantiating event manager interface: " + e);
 			Registered = false;
-
 		} // catch
-
 	} // Constructor
 
 	public void run()
@@ -94,42 +84,32 @@ class SecurityMonitor extends Thread
 			// because we do not know if the temperature/humidity is high/low.
 			// This panel is placed in the upper left hand corner and the status 
 			// indicators are placed directly to the right, one on top of the other
-
 			mw = new MessageWindow("SecurityMonitor Monitoring Console", 0, 0);
-	
 			mw.WriteMessage( "Registered with the event manager." );
 
 	    	try
 	    	{
 				mw.WriteMessage("   Participant id: " + em.GetMyId() );
 				mw.WriteMessage("   Registration Time: " + em.GetRegistrationTime() );
-
 			} // try
-
 	    	catch (Exception e)
 			{
 				System.out.println("Error:: " + e);
-
 			} // catch
 
 			/********************************************************************
 			** Here we start the main simulation loop
 			*********************************************************************/
-
 			while ( !Done )
 			{
 				// Here we get our event queue from the event manager
-
 				try
 				{
 					eq = em.GetEventQueue();
-
 				} // try
-
 				catch( Exception e )
 				{
 					mw.WriteMessage("Error getting event queue::" + e );
-
 				} // catch
 
 				// If there are messages in the queue, we read through them.
@@ -142,73 +122,76 @@ class SecurityMonitor extends Thread
 				// as it would in reality.
 
 				int qlen = eq.GetSize();
-
+				
 				for ( int i = 0; i < qlen; i++ )
 				{
 					Evt0 = eq.GetEvent();
 					switch(Evt0.GetEventId())
 					{
-					
-					case EventIDs.DOOR_ID : // door broken
-					
-						if(!armed)
-							break;
-						else
-							mw.WriteMessage("DOOR BROKEN!");
-					break;
-					
-					case EventIDs.WINDOW_ID : // window broken
+						case EventIDs.DOOR_ID : // door broken
+							if(!armed)
+								break;
+							else
+								mw.WriteMessage("DOOR BROKEN!");
+						break;
 						
-						if(!armed)
-							break;
-						else
-							mw.WriteMessage("WINDOW BROKEN!");
-					break;
-
-					case EventIDs.MOTION_ID : // motion detected
+						case EventIDs.WINDOW_ID : // window broken
+							if(!armed)
+								break;
+							else
+								mw.WriteMessage("WINDOW BROKEN!");
+						break;
+	
+						case EventIDs.MOTION_ID : // motion detected			
+							if(!armed)
+								break;
+							else
+								mw.WriteMessage("MOTION DETECTED!");
+						break;
+						
+						case EventIDs.FIRE_ID : // fire detected				
+							if(!armed)
+								break;
+							else
+								mw.WriteMessage("FIRE ALARM!");
+						break;
 					
-						if(!armed)
-							break;
-						else
-							mw.WriteMessage("MOTION DETECTED!");
-					break;
-					
-					case EventIDs.FIRE_ID : // fire detected
-					
-						if(!armed)
-							break;
-						else
-							mw.WriteMessage("FIRE ALARM!");
-					break;
-				
-					case EventIDs.CONSOLE_ID :
-					
-						if(Evt0.GetMessage().equals(Events.ARM_SYSTEM))
-						{
-							mw.WriteMessage("SYSTEM IS ARMED");
-							armed = true;
-						}
-						else if(Evt0.GetMessage().equals(Events.DISARM_SYSTEM))
-						{
-							mw.WriteMessage("SYSTEM IS DISARMED");
-							armed = false;
-						}
-						/*else if(Evt0.GetMessage().equals(Events.SPRINKLER_OFF))
-						{
-
-							// Here we send the event to the event manager.
-							try
+						case EventIDs.CONSOLE_ID :				
+							if(Evt0.GetMessage().equals(Events.ARM_SYSTEM))
 							{
-								em.SendEvent( new Event( EventIDs.SECURITY_MONITOR_ID, Events.SPRINKLER_OFF ));
-							} // try
-
-							catch (Exception e)
+								mw.WriteMessage("SYSTEM IS ARMED");
+								armed = true;
+							}
+							else if(Evt0.GetMessage().equals(Events.DISARM_SYSTEM))
 							{
-								System.out.println( "Error Posting Sprinkler Turn Off:: " + e );
-							} // catch
-						}*/
-					break;
-					}
+								mw.WriteMessage("SYSTEM IS DISARMED");
+								armed = false;
+							}
+							else if(Evt0.GetMessage().equals(Events.SPRINKLER_ON))
+							{
+								mw.WriteMessage("SPRINKLER TURNS ON !!!");
+							}
+							else if(Evt0.GetMessage().equals(Events.SPRINKLER_OFF))
+							{
+								mw.WriteMessage("SPRINKLER TURNS OFF !!!");
+							}
+						break;
+						
+						case 99:
+							{
+								Done = true;
+								try
+								{
+									em.UnRegister();
+						    	} // try
+						    	catch (Exception e)
+						    	{
+									mw.WriteMessage("Error unregistering: " + e);
+						    	} // catch
+						    	mw.WriteMessage( "\n\nSimulation Stopped. \n");
+							}
+						break;				
+					}//switch
 
 				} // for
 

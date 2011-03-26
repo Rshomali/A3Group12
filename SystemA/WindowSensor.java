@@ -83,7 +83,7 @@ class WindowSensor{
 			float WinPosY = 0.60f;	//This is the Y position of the message window in terms 
 								 	//of a percentage of the screen height 
 			
-			MessageWindow mw = new MessageWindow("Door Sensor", WinPosX, WinPosY);
+			MessageWindow mw = new MessageWindow("Window Sensor", WinPosX, WinPosY);
 
 			mw.WriteMessage("Registered with the event manager." );
 
@@ -101,7 +101,7 @@ class WindowSensor{
 			} // catch
 	    	
 	    	
-	    	mw.WriteMessage("\nInitializing DoorBroken Simulation in DoorSensor::" );
+	    	mw.WriteMessage("\nInitializing WindowBroken Simulation in WindowSensor::" );
 
 	    	
 	    	/********************************************************************
@@ -121,7 +121,7 @@ class WindowSensor{
 
 				//PostWindowBroken( em, WindowBrokenState );
 
-				mw.WriteMessage("Current Door Broken Status:: " + WindowBrokenState + "%");
+				mw.WriteMessage("Current Window Broken Status:: " + WindowBrokenState + "%");
 
 				// Get the message queue
 
