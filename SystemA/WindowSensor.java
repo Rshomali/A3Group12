@@ -121,7 +121,7 @@ class WindowSensor{
 
 				//PostWindowBroken( em, WindowBrokenState );
 
-				mw.WriteMessage("Current Window Broken Status:: " + WindowBrokenState + "%");
+				//mw.WriteMessage("Current Window Broken Status:: " + WindowBrokenState + "%");
 
 				// Get the message queue
 

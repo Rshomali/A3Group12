@@ -133,7 +133,7 @@ class DoorSensor{
 
 				//PostDoorBroken( em, DoorBrokenState );
 
-				mw.WriteMessage("Current Door Broken Status:: " + DoorBrokenState + "%");
+				//mw.WriteMessage("Current Door Broken Status:: " + DoorBrokenState + "%");
 
 				// Get the message queue
 

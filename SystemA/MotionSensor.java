@@ -118,7 +118,7 @@ class MotionSensor{
 
 				//PostMotionDetected( em, MotionDetectedState );
 
-				mw.WriteMessage("Current Motion Detection Status:: " + MotionDetectedState + "%");
+				//mw.WriteMessage("Current Motion Detection Status:: " + MotionDetectedState + "%");
 
 				// Get the message queue
 

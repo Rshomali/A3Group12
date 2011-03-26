@@ -118,7 +118,7 @@ class FireSensor{
 
 				//PostFireAlarm( em, FireAlarmState );
 
-				mw.WriteMessage("Current Fire Alarm Status:: " + FireAlarmState + "%");
+				//mw.WriteMessage("Current Fire Alarm Status:: " + FireAlarmState + "%");
 
 				// Get the message queue
 
