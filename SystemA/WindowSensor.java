@@ -5,8 +5,8 @@ import java.util.*;
 
 class WindowSensor{
 		
-	static int sensorID = 7;
-	static int CONSOLE_ID = 17;
+	//static int sensorID = 7;
+	//static int CONSOLE_ID = 17;
 	
 	public static void main(String args[])
 	{
@@ -151,12 +151,12 @@ class WindowSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == CONSOLE_ID )
+					if ( Evt.GetEventId() == EventIDs.CONSOLE_ID )
 					{
-						if (Evt.GetMessage().equalsIgnoreCase("SWB")) // humidifier on
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_WINDOW_BROKEN)) // humidifier on
 						{
 							WindowBrokenState = 1;
-							PostWindowBroken( em, "WB");
+							PostWindowBroken( em, Events.WINDOW_BROKEN);
 						} // if
 
 						
@@ -194,7 +194,7 @@ class WindowSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, "A"); 
+					PostAliveSignal(em, Events.ALIVE); 
 					previousTime = nowTime;
 				}
 										
@@ -206,7 +206,7 @@ class WindowSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.WINDOW_ID, event );
 
 		// Here we send the event to the event manager.
 
@@ -231,7 +231,7 @@ class WindowSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.WINDOW_ID, event );
 
 		// Here we send the event to the event manager.
 

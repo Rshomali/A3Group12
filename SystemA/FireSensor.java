@@ -5,9 +5,6 @@ import java.util.*;
 
 class FireSensor{
 	
-	static int sensorID = 9;
-	static int CONSOLE_ID = 17;
-	
 	public static void main(String args[])
 	{
 		String EvtMgrIP;					// Event Manager IP address
@@ -148,12 +145,12 @@ class FireSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == CONSOLE_ID )
+					if ( Evt.GetEventId() == EventIDs.CONSOLE_ID )
 					{
-						if (Evt.GetMessage().equalsIgnoreCase("SFA")) // humidifier on
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_FIRE_ALARM)) // humidifier on
 						{
 							FireAlarmState = 1;
-							PostFireAlarm( em, "FA" );
+							PostFireAlarm( em, Events.FIRE_ALARM );
 						} // if
 
 						
@@ -189,7 +186,7 @@ class FireSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, "A"); 
+					PostAliveSignal(em, Events.ALIVE); 
 					previousTime = nowTime;
 				}			
 			}
@@ -200,7 +197,7 @@ class FireSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.FIRE_ID, event );
 
 		// Here we send the event to the event manager.
 
@@ -222,7 +219,7 @@ class FireSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event);
+		Event evt = new Event( EventIDs.FIRE_ID, event);
 
 		// Here we send the event to the event manager.
 

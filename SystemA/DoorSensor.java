@@ -5,9 +5,6 @@ import java.util.*;
 
 class DoorSensor{
 		
-	static int sensorID = 6;
-	static int CONSOLE_ID = 17;
-	
 	public static void main(String args[])
 	{
 		String EvtMgrIP;					// Event Manager IP address
@@ -163,14 +160,14 @@ class DoorSensor{
 				{
 					Evt = eq.GetEvent();
 
-					if ( Evt.GetEventId() == CONSOLE_ID )
+					if ( Evt.GetEventId() == EventIDs.CONSOLE_ID )
 					{
 						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_DOOR_BROKEN)) // humidifier on
 						{
 							System.out.println("\n\nSimulated DoorBroken recevied \n");
 				//			DoorBrokenState = 1;
 				
-							PostDoorBroken( em, "DB");
+							PostDoorBroken( em, Events.DOOR_BROKEN);
 						} // if
 
 						/*
@@ -222,7 +219,7 @@ class DoorSensor{
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
-					PostAliveSignal(em, "A"); 
+					PostAliveSignal(em, Events.ALIVE); 
 					previousTime = nowTime;
 				}
 			}
@@ -233,7 +230,7 @@ class DoorSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.DOOR_ID, event );
 
 		// Here we send the event to the event manager.
 
@@ -256,7 +253,7 @@ class DoorSensor{
 	{
 		// Here we create the event.
 
-		Event evt = new Event( sensorID, event );
+		Event evt = new Event( EventIDs.DOOR_ID, event );
 
 		// Here we send the event to the event manager.
 
