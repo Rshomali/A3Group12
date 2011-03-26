@@ -131,29 +131,37 @@ class SecurityMonitor extends Thread
 						case EventIDs.DOOR_ID : // door broken
 							if(!armed)
 								break;
-							else
+							else if(Evt0.GetMessage().equals(Events.DOOR_BROKEN))
 								mw.WriteMessage("DOOR BROKEN!");
+							//else if(Evt0.GetMessage().equals(Events.ALIVE))
+							//	mw.WriteMessage("DOOR SENSOR IS ALIVE!");
 						break;
 						
 						case EventIDs.WINDOW_ID : // window broken
 							if(!armed)
 								break;
-							else
+							else if(Evt0.GetMessage().equals(Events.WINDOW_BROKEN))
 								mw.WriteMessage("WINDOW BROKEN!");
+							//else if(Evt0.GetMessage().equals(Events.ALIVE))
+							//	mw.WriteMessage("WINDOW SENSOR IS ALIVE!");
 						break;
 	
 						case EventIDs.MOTION_ID : // motion detected			
 							if(!armed)
 								break;
-							else
-								mw.WriteMessage("MOTION DETECTED!");
+							else if(Evt0.GetMessage().equals(Events.MOTION_DETECTED))
+								mw.WriteMessage("MOTION DETECTED");
+							//else if(Evt0.GetMessage().equals(Events.ALIVE))
+							//	mw.WriteMessage("MOTION DETECTION SENSOR IS ALIVE!");
 						break;
 						
 						case EventIDs.FIRE_ID : // fire detected				
 							if(!armed)
 								break;
-							else
-								mw.WriteMessage("FIRE ALARM!");
+							else if(Evt0.GetMessage().equals(Events.FIRE_ALARM))
+								mw.WriteMessage("FIRE ALARM");
+							//else if(Evt0.GetMessage().equals(Events.ALIVE))
+							//	mw.WriteMessage("FIRE SENSOR IS ALIVE!");
 						break;
 					
 						case EventIDs.CONSOLE_ID :				

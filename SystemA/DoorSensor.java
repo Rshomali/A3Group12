@@ -165,9 +165,11 @@ class DoorSensor{
 
 					if ( Evt.GetEventId() == CONSOLE_ID )
 					{
-						if (Evt.GetMessage().equalsIgnoreCase("SDB")) // humidifier on
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_DOOR_BROKEN)) // humidifier on
 						{
-							DoorBrokenState = 1;
+							System.out.println("\n\nSimulated DoorBroken recevied \n");
+				//			DoorBrokenState = 1;
+				
 							PostDoorBroken( em, "DB");
 						} // if
 
