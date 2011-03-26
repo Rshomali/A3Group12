@@ -183,6 +183,17 @@ class FireSensor{
 
 				} // for
 				
+				try
+				{
+					Thread.sleep( Delay );
+
+				} // try
+
+				catch( Exception e )
+				{
+					mw.WriteMessage("Sleep error:: " + e );
+
+				} // catch
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){

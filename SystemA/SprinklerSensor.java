@@ -3,10 +3,7 @@ import EventPackage.*;
 
 import java.util.*;
 
-class WindowSensor{
-		
-	//static int sensorID = 7;
-	//static int CONSOLE_ID = 17;
+class SprinklerSensor{
 	
 	public static void main(String args[])
 	{
@@ -16,12 +13,11 @@ class WindowSensor{
 		int EvtId = 0;						// User specified event ID
 		EventManagerInterface em = null;	// Interface object to the event manager
 		
-		int WindowBrokenState = 0;			// DoorBroken State: 0 == no broken, 1 == broken.
+		//int FireAlarmState = 0;			// DoorBroken State: 0 == no broken, 1 == broken.
 		
 		int	Delay = 2500;					// The loop delay (2.5 seconds)
 		boolean Done = false;				// Loop termination flag
-		
-		
+
 		/////////////////////////////////////////////////////////////////////////////////
 		// Get the IP address of the event manager
 		/////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +79,7 @@ class WindowSensor{
 			float WinPosY = 0.60f;	//This is the Y position of the message window in terms 
 								 	//of a percentage of the screen height 
 			
-			MessageWindow mw = new MessageWindow("Window Sensor", WinPosX, WinPosY);
+			MessageWindow mw = new MessageWindow("Sprinkler Sensor", WinPosX, WinPosY);
 
 			mw.WriteMessage("Registered with the event manager." );
 
@@ -101,7 +97,7 @@ class WindowSensor{
 			} // catch
 	    	
 	    	
-	    	mw.WriteMessage("\nInitializing WindowBroken Simulation in WindowSensor::" );
+	    	mw.WriteMessage("\nInitializing SprinklerSensor Simulation in SprinklerSensor::" );
 
 	    	
 	    	/********************************************************************
@@ -110,18 +106,16 @@ class WindowSensor{
 
 			mw.WriteMessage("Beginning Simulation... ");
 
-
 			Date previousTime = new Date();
 			Date nowTime;
 			//Date temp;
-			
 			while ( !Done )
 			{
 				// Post the current DOOR BROKEN STATUS
 
-				//PostWindowBroken( em, WindowBrokenState );
+				//PostFireAlarm( em, FireAlarmState );
 
-				//mw.WriteMessage("Current Window Broken Status:: " + WindowBrokenState + "%");
+				//mw.WriteMessage("Current Fire Alarm Status:: " + FireAlarmState + "%");
 
 				// Get the message queue
 
@@ -153,11 +147,19 @@ class WindowSensor{
 
 					if ( Evt.GetEventId() == EventIDs.CONSOLE_ID )
 					{
-						if (Evt.GetMessage().equalsIgnoreCase(Events.SIMULATE_WINDOW_BROKEN)) // humidifier on
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SPRINKLER_ON)) // humidifier on
 						{
-							WindowBrokenState = 1;
-							PostWindowBroken( em, Events.WINDOW_BROKEN);
+							//FireAlarmState = 1;
+							//PostEvent( em, Events.FIRE_ALARM );
+							mw.WriteMessage("Sprinkler is on");
 						} // if
+						if (Evt.GetMessage().equalsIgnoreCase(Events.SPRINKLER_OFF)) // humidifier on
+						{
+							FireAlarmState = 1;
+							//PostEvent( em, Events.FIRE_ALARM );
+							mw.WriteMessage("Sprinkler is off");
+						} // if
+						
 
 						
 
@@ -199,24 +201,21 @@ class WindowSensor{
 					mw.WriteMessage("Sleep error:: " + e );
 
 				} // catch
-				//calculate 5 sec
-				
 				nowTime = new Date();
 				long diff = nowTime.getSeconds()-previousTime.getSeconds();
 				if(diff>=5){
 					PostAliveSignal(em, Events.ALIVE); 
 					previousTime = nowTime;
-				}
-										
+				}			
 			}
 		}
 	}			
 			
-	static private void PostWindowBroken(EventManagerInterface ei, String event )
+	static private void PostAliveSignal(EventManagerInterface ei, String event)
 	{
 		// Here we create the event.
 
-		Event evt = new Event( EventIDs.WINDOW_ID, event );
+		Event evt = new Event( EventIDs.SPRINKLER_ID , event);
 
 		// Here we send the event to the event manager.
 
@@ -236,12 +235,12 @@ class WindowSensor{
 	} // PostHumidity
 	
 	
-	
-	static private void PostAliveSignal(EventManagerInterface ei, String event )
+	/*
+	static private void PostEvent(EventManagerInterface ei, String eventID, String event)
 	{
 		// Here we create the event.
 
-		Event evt = new Event( EventIDs.WINDOW_ID, event );
+		Event evt = new Event( eventID, event );
 
 		// Here we send the event to the event manager.
 
@@ -258,8 +257,10 @@ class WindowSensor{
 
 		} // catch
 
-	} // PostHumidity
-	
+	} // PostEvent
+			
+			*/
+			
 }
 
 		
