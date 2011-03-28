@@ -73,7 +73,17 @@ public class MConsole
 			while (!Done)
 			{
 				// Here, the main thread continues and provides the main menu
-		
+				try
+				{
+					Thread.sleep( 10*1000 );
+
+				} // try
+
+				catch( Exception e )
+				{
+					System.out.println( "Sleep error:: " + e );
+
+				} // catch
 
 
 			} // while

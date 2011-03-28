@@ -86,7 +86,7 @@ class MMonitor extends Thread
 		EventQueue eq = null;			// Message Queue
 		int EvtId = 0;					// User specified event ID
 		boolean Done = false;
-		int	Delay = 5*1000;				// The loop delay (5 second)
+		int	Delay = 1*1000;				// The loop delay (5 second)
 
 
 		if (em != null)
@@ -130,8 +130,6 @@ class MMonitor extends Thread
 				 														   //(mw.GetY() + mw.Height()) - (int)((component_counter%4)*150), 2 );
 			}
 			
-
-			Calendar TimeStamp = Calendar.getInstance();
 			
 			/********************************************************************
 			** Here we start the main simulation loop
@@ -173,6 +171,7 @@ class MMonitor extends Thread
 				for ( int i = 0; i < qlen; i++ )
 				{
 					Evt = eq.GetEvent();
+					//mw.WriteMessage( "#######Received EVENT ID=" + Evt.GetEventId() + " Message=" +  Evt.GetMessage() );
 					
 					if (Evt.GetMessage().equalsIgnoreCase(Events.ALIVE))
 					{
@@ -181,7 +180,9 @@ class MMonitor extends Thread
 							if ((int)(MySystem.COMPONENTS.get(key)) == Evt.GetEventId())
 							{
 								((Indicator)(ComponentStatus.get(key))).SetLampColor(1);
-								mw.WriteMessage( ">>" + key + ": Status ALIVE"  );
+								//mw.WriteMessage( "Received ALIVE signal ............."  );
+								//mw.WriteMessage( ">>" + key + ": Status ALIVE"  );
+								Calendar TimeStamp = Calendar.getInstance();
 								HeartBeattime.put(key, TimeStamp.getTimeInMillis());
 							}
 							
@@ -211,7 +212,8 @@ class MMonitor extends Thread
 
 				} // for
 
-				long current_time = TimeStamp.getTimeInMillis();
+				Calendar now = Calendar.getInstance();
+				long current_time = now.getTimeInMillis();
 				
 				for ( String key : MySystem.COMPONENTS.keySet() )
 				{
@@ -224,11 +226,19 @@ class MMonitor extends Thread
 					{
 						long last_hb = (long) HeartBeattime.get(key);
 						long interval = current_time - last_hb;
-						if( interval > (5*1000))
+						//mw.WriteMessage( "#### current= " + current_time + "   last=" +last_hb );
+						//mw.WriteMessage( "Interval = " + interval );
+						
+						if( (HeartBeattime.get(key) == null) || (interval > (5*1000)) )
 						{
 							mw.WriteMessage( ">>" + key + ": Status DOWN"  );
+							((Indicator)(ComponentStatus.get(key))).SetLampColor(3);
 						}
-						((Indicator)(ComponentStatus.get(key))).SetLampColor(3);						
+						else
+						{
+							mw.WriteMessage( ">>" + key + ": Status ALIVE"  );
+							((Indicator)(ComponentStatus.get(key))).SetLampColor(1);						
+						}
 					}
 				}
 				
@@ -237,7 +247,7 @@ class MMonitor extends Thread
 
 		} else {
 
-		//	System.out.println("Unable to register with the event manager.\n\n" );
+			System.out.println("Unable to register with the event manager.\n\n" );
 
 		} // if
 
