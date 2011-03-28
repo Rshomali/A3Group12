@@ -150,7 +150,7 @@ public class SecurityConsole extends Thread
 					System.out.println( "a: Simulate door broken? (yes/no)" );
 					System.out.println( "b: Simulate window broken? (yes/no)" );
 					System.out.println( "c: Simulate motion detection? (yes/no)" );
-					System.out.println( "d: Simulate fire alarm? (yes/no)" );
+				/*	System.out.println( "d: Simulate fire alarm? (yes/no)" );
 					if(fireAlarm == true)
 					{
 						System.out.println( "e: Turn on sprinkler? (yes/no)" );
@@ -161,7 +161,7 @@ public class SecurityConsole extends Thread
 						System.out.println( "f: Turn off sprinkler? (yes/no)" );
 						sprinklerOn=true;
 					}
-				
+				*/
 					
 					System.out.print( "\n>>>> " );
 					Option = UserInput.KeyboardReadString();
@@ -268,6 +268,7 @@ public class SecurityConsole extends Thread
 						} // while
 					}			
 					
+				/*	
 					if(Option.equals( "d" ))
 					{
 						//////////// option d ////////////
@@ -374,7 +375,7 @@ public class SecurityConsole extends Thread
 								System.out.println( "Not a yes/no, please try again..." );
 							} // if
 						} // while
-					}			
+					}*/			
 				} // if(option ==1)
 				
 				
@@ -414,7 +415,8 @@ public class SecurityConsole extends Thread
 					System.out.println( "a: Simulate door broken? (yes/no)" );
 					System.out.println( "b: Simulate window broken? (yes/no)" );
 					System.out.println( "c: Simulate motion detection? (yes/no)" );
-					System.out.println( "d: Simulate fire alarm? (yes/no)" );
+					//System.out.println( "d: Simulate fire alarm? (yes/no)" );
+					/*
 					if(fireAlarm == true)
 					{
 						System.out.println( "e: Turn on sprinkler? (yes/no)" );
@@ -426,6 +428,7 @@ public class SecurityConsole extends Thread
 						sprinklerOn=true;
 					}
 				
+					*/
 					
 					System.out.print( "\n>>>> " );
 					Option = UserInput.KeyboardReadString();
@@ -532,6 +535,7 @@ public class SecurityConsole extends Thread
 						} // while
 					}			
 					
+					/*
 					if(Option.equals( "d" ))
 					{
 						//////////// option d ////////////
@@ -638,7 +642,8 @@ public class SecurityConsole extends Thread
 								System.out.println( "Not a yes/no, please try again..." );
 							} // if
 						} // while
-					}			
+					}*/			
+				
 				} // if (option == 2)
 				
 				

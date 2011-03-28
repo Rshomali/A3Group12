@@ -155,7 +155,7 @@ class SprinklerSensor{
 						} // if
 						if (Evt.GetMessage().equalsIgnoreCase(Events.SPRINKLER_OFF)) // humidifier on
 						{
-							FireAlarmState = 1;
+							//FireAlarmState = 1;
 							//PostEvent( em, Events.FIRE_ALARM );
 							mw.WriteMessage("Sprinkler is off");
 						} // if

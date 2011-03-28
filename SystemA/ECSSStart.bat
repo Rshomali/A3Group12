@@ -15,7 +15,3 @@ START "WINDOW SENSOR CONSOLE" /MIN /NORMAL java WindowSensor %1
 
 %ECHO Starting Motion Sensor Console
 START "Motion SENSOR CONSOLE" /MIN /NORMAL java MotionSensor %1
-
-%ECHO Starting Fire Sensor Console
-START "Fire SENSOR CONSOLE" /MIN /NORMAL java FireSensor %1
-
