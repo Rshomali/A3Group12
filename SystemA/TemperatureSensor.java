@@ -143,7 +143,9 @@ class TemperatureSensor
 			*********************************************************************/
 
 			mw.WriteMessage("Beginning Simulation... ");
-
+			
+			Date previousTime = new Date();
+			Date nowTime;
 
 			while ( !Done )
 			{
@@ -378,5 +380,28 @@ class TemperatureSensor
 		} // catch
 
 	} // PostTemperature
+	
+	static private void PostAliveSignal(EventManagerInterface ei, String event)
+	{
+		// Here we create the event.
+
+		Event evt = new Event( EventIDs.FIRE_ID, event);
+
+		// Here we send the event to the event manager.
+
+		try
+		{
+			ei.SendEvent( evt );
+			//mw.WriteMessage( "Sent Humidity Event" );
+
+		} // try
+
+		catch (Exception e)
+		{
+			System.out.println( "Error happens during sending this"+ event + "and" + e );
+
+		} // catch
+
+	} // PostHumidity
 
 } // TemperatureSensor
